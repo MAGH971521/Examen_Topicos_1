@@ -46,7 +46,7 @@ class Movie(models.Model):
     slug = models.SlugField(blank=True, null=True)
     active = models.BooleanField(default=True, verbose_name='Is in the Cinema?')
     created = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now, verbose_name='Registration date')
-    updated = models.DateTimeField(auto_now=True, verbose_name='Registration date')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Updated Time')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -63,18 +63,20 @@ class Movie(models.Model):
     @property
     def age(self):
         if int(self.year) <= datetime.now().year:
-            age_time = datetime.combine(self.created, datetime.now().max.time())
+            age_time = datetime.combine(self.created, datetime.now().min.time())
             print(age_time)
             try:
                 difference = datetime.now() - age_time
+                print(difference)
             except:
                 print("Error")
                 return "Well... i'm dissapointed :/ "
-            if difference >= timedelta(minutes=1):
+            if difference <= timedelta(minutes=10):
+                print(difference)
                 return "Just now!"
             print(timesince(age_time).split(', ')[0])
             return 'Register occurs {time} ago'.format(time=timesince(age_time).split(', ')[0])
-        return str("Ell... i'm dissapointed again :(")
+        return str("Well... i'm dissapointed again :(")
 
 
 #Metodos Post y Pre Save

@@ -13,11 +13,11 @@ class MovieModelAdmin(admin.ModelAdmin):
         'year',
         'genre',
         'active',
+        'created',
         'updated',
-        'timestamp',
         'get_age',
     ]
-    readonly_fields =['updated','timestamp','slug','get_age']
+    readonly_fields =['created','updated','slug','get_age']
 
     def get_age(self, obj, *args, **kwargs):
         return str(obj.age)
