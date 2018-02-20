@@ -48,6 +48,8 @@ class Movie(models.Model):
     created = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now, verbose_name='Registration date')
     updated = models.DateTimeField(auto_now=True, verbose_name='Updated Time')
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+    objects = MovieModelManager()
 
     def __str__(self):
         return smart_text(str(self.name + ' - ' + self.studio))
@@ -63,7 +65,7 @@ class Movie(models.Model):
     @property
     def age(self):
         if int(self.year) <= datetime.now().year:
-            age_time = datetime.combine(self.created, datetime.now().min.time())
+            age_time = datetime.combine(self.created, self.updated.time())
             print(age_time)
             try:
                 difference = datetime.now() - age_time
