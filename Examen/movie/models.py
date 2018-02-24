@@ -23,7 +23,7 @@ GENRE_CHOICES = (
 
 class MovieModelQuerySet(models.query.QuerySet):
     def active(self):
-        return self.filter(name__icontains = True)
+        return self.filter(active = True)
 
     def returns_namefield(self, value):
         return self.filter(name__icontains = value)
@@ -34,8 +34,7 @@ class MovieModelManager(models.Manager):
 
     def all(self, *args, **kwargs):
         query_values = super(MovieModelManager, self).all(*args, **kwargs).filter(active=True)
-        print (str(qs))
-        return qs
+        return query_values
 
 
 class Movie(models.Model):
