@@ -33,7 +33,7 @@ class MovieModelManager(models.Manager):
         return MovieModelQuerySet(self.model, using=self._db)
 
     def all(self, *args, **kwargs):
-        query_values = super(MovieModelManager, self).all(*args, **kwargs).filter(active=True)
+        qs = super(MovieModelManager, self).all(*args, **kwargs).filter(active=True)
         print (str(qs))
         return qs
 
