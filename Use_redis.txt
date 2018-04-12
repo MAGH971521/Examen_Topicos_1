@@ -1,0 +1,32 @@
+Librerias necesarias para usar Redis y convertirlo a JSON
+//  import redis, ast, json
+
+Respuesta de Redis a string
+
+r = redis.Redis(host=..., port=6379, db=0)
+r.get('clave')
+>> b"algun objeto"
+
+response_redis = r.get('clave').decode('utf-8')
+
+String a Diccionario
+
+dictionary_redis = ast.literal_eval(response_redis)
+
+Diccionario a JSON
+
+dict_json = json.loads(json.dump(dictionary_redis))
+
+
+
+Redireccionar en Django...
+
+from django.shortcuts import redirect
+
+def my_view(request):
+    ...
+    object = MyModel.objects.get(...)
+    return redirect(object)
+
+
+secretos: https://github.com/Janeth097/ProyectoWeb
