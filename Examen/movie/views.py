@@ -12,6 +12,7 @@ def sql_to_redis(request):
     structure = {
         "Movies" : { }
     }
+    data_value = [] 
     for val in list(Movie.objects.all()):
         structure["Movies"].update({
         val.id : {
@@ -22,8 +23,8 @@ def sql_to_redis(request):
             "active": val.active,
             "created": val.created
         }})
-
-        red.sadd("MyDB:Movies:" + val.id, structure["Movies"][val.id])
-    data_value = list(red.smember("MyDB:Movies:{}".format(val.id)))
-    data_value[0] = data_value[0].decode('utf-8')
-    return render(request, "index.html", {'data_value': data_value})
+        red.sadd("MyDB:Movies:{}".format(val.id), structure["Movies"][val.id])
+        data_origin = list(red.smembers("MyDB:Movies:{}".format(val.id)))
+        data_value.append(data_origin[0].decode('utf-8'))
+    print(data_value)
+    return redirect(request, "index.html", {'data_value': data_value})
