@@ -4,11 +4,10 @@ from .models import Movie
 
 # Create your views here.
 def sql_to_redis(request):
-    redis.Redis(host='localhost', port=9090, db=0)
+    red = redis.Redis(host='localhost', port=9090, db=0)
     structure = {
         "Movies" : { }
     }
-    count = 0
     for val in list(Movie.objects.all()):
         structure["Movies"].update({
         val.id : {
@@ -19,4 +18,5 @@ def sql_to_redis(request):
             "active": val.active,
             "created": val.created
         }})
-    return redirect(structure)
+    red.hmset("FakeDB", structure)
+    return redirect()
