@@ -33,9 +33,7 @@ class MovieModelManager(models.Manager):
         return MovieModelQuerySet(self.model, using=self._db)
 
     def all(self, *args, **kwargs):
-        qs = super(MovieModelManager, self).all(*args, **kwargs).filter(active=True)
-        print (str(qs))
-        return qs
+        return super(MovieModelManager, self).all(*args, **kwargs).order_by('year')
 
 
 class Movie(models.Model):
@@ -48,7 +46,7 @@ class Movie(models.Model):
     created = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now, verbose_name='Registration date')
     updated = models.DateTimeField(auto_now=True, verbose_name='Updated Time')
     timestamp = models.DateTimeField(auto_now_add=True)
-    
+
     objects = MovieModelManager()
 
     def __str__(self):
