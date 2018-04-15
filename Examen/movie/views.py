@@ -6,7 +6,7 @@ from .models import Movie
 # Create your views here.
 
 def home(request):
-    name = None
+    values = None
     for message in get_messages(request):
         values = message
         break
